@@ -1,0 +1,40 @@
+select {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+    z-index: 1;
+    outline: none;
+}
+
+.select {
+    display: grid;
+    grid-template-areas: "select";
+    align-items: center;
+    position: relative;
+    border: 1px solid black;
+    height: 2.5rem;
+    padding-inline: 0.6rem;
+    width: min(17rem, 100%);
+    font-size: 1.1rem;
+    background-color: transparent;
+    cursor: pointer; 
+}
+
+select,
+.select::after {
+    grid-area: select;
+}
+
+.select::after {
+    content: "";
+    justify-self: end;
+    width: 0.5em;
+    height: 0.3em;
+    background-color: black;
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+}
