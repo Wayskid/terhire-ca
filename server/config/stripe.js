@@ -77,9 +77,12 @@ stripeRouter.post(
     let event;
 
     try {
-      event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
+      event = stripe.webhooks.constructEvent(
+        req.rawBody,
+        sig,
+        endpointSecret
+      );
     } catch (err) {
-      // On error, log and return the error message
       console.log(`❌ Error message: ${err.message}`);
       res.status(400).send(`Webhook Error: ${err.message}`);
       return;
@@ -391,6 +394,6 @@ stripeRouter.post(
         console.log(`Unhandled event type ${event.type}`);
     }
 
-    response.send().end();
+    res.send().end();
   }
 );
