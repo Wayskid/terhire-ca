@@ -28,7 +28,7 @@ stripeRouter.post("/create-checkout-session", async (req, res) => {
           type: "fixed_amount",
           fixed_amount: {
             amount: 0,
-            currency: "usd",
+            currency: "cad",
           },
           display_name: "Free shipping",
           delivery_estimate: {
@@ -48,7 +48,7 @@ stripeRouter.post("/create-checkout-session", async (req, res) => {
           type: "fixed_amount",
           fixed_amount: {
             amount: 1500,
-            currency: "usd",
+            currency: "cad",
           },
           display_name: "Next day air",
           delivery_estimate: {
