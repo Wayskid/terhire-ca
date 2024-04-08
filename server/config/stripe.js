@@ -86,6 +86,9 @@ stripeRouter.post("/create-checkout-session", async (req, res) => {
     shipping_address_collection: {
       allowed_countries: ["CA"],
     },
+    customer_update: {
+      shipping: "auto",
+    },
     customer: customer.id,
     phone_number_collection: {
       enabled: true,
