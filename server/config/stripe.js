@@ -105,7 +105,6 @@ stripeRouter.post(
           total_details,
         } = checkoutSessionCompleted;
 
-        console.log("Hello");
         const session = await stripe.checkout.sessions.retrieve(
           checkoutSessionCompleted.id,
           {
@@ -132,7 +131,7 @@ stripeRouter.post(
         });
 
         // map cart items
-        const mappedCartItems = cart_items.map(
+        const mappedCartItems = session.line_items.data.map(
           (item) =>
             `<table
             cellspacing="0"
@@ -366,29 +365,29 @@ stripeRouter.post(
           </table>`
         );
 
-        // async function main() {
-        //   const transporter = nodeMailer.createTransport({
-        //     host: process.env.MAILER_HOST,
-        //     secureConnection: true,
-        //     port: 587,
-        //     auth: {
-        //       user: process.env.TERHIRE_EMAIL,
-        //       pass: process.env.TERHIRE_PASSWORD,
-        //     },
-        //   });
+        async function main() {
+          const transporter = nodeMailer.createTransport({
+            host: process.env.MAILER_HOST,
+            secureConnection: true,
+            port: 587,
+            auth: {
+              user: process.env.TERHIRE_EMAIL,
+              pass: process.env.TERHIRE_PASSWORD,
+            },
+          });
 
-        //   const info = await transporter.sendMail({
-        //     from: `Terhire <${process.env.TERHIRE_EMAIL}>`,
-        //     to: customer_details.email,
-        //     subject: "Order Confirmation",
-        //     html: emailHtml({
-        //       name: customer_details.name,
-        //       mappedCartItems,
-        //     }),
-        //   });
+          const info = await transporter.sendMail({
+            from: `Terhire <${process.env.TERHIRE_EMAIL}>`,
+            to: customer_details.email,
+            subject: "Order Confirmation",
+            html: emailHtml({
+              name: customer_details.name,
+              mappedCartItems,
+            }),
+          });
 
-        //   console.log(`Message sent: ${info.messageId}`);
-        // }
+          console.log(`Message sent: ${info.messageId}`);
+        }
         main();
       default:
         console.log(`Unhandled event type ${event.type}`);

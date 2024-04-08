@@ -12,8 +12,6 @@ export default function HomeShop() {
     filter,
   });
 
-  console.log(data, error);
-
   return (
     <div className="w-[min(73rem,100%)] mx-auto my-20 px-6 md:px-12">
       <p className="header text-4xl md:text-5xl text-center mb-8">
