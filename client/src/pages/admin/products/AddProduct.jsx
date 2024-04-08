@@ -146,8 +146,6 @@ export default function AddProduct() {
   }
 
   //Handle add image
-  // const [previewVal, setPreviewVal] = useState([]);
-  // setPreviewVal([...previewVal, arrayVals.imagesVal]);
   async function handleAddImages(e) {
     e.preventDefault();
     if (arrayVals.imagesVal) {
@@ -168,20 +166,6 @@ export default function AddProduct() {
       images: array,
     });
   }
-
-  console.log(addProductVal);
-
-  // //Handle image preview
-  // const [imgPreview, setImgPreview] = useState([]);
-  // useEffect(() => {
-  //   for (let i = 0; i < previewVal.length; i++) {
-  //     const image = previewVal[i];
-  //     if (image) {
-  //       const objectUrl = URL.createObjectURL(image);
-  //       setImgPreview([...imgPreview, objectUrl]);
-  //     }
-  //   }
-  // }, [addProductVal.images]);
 
   //Handle create product
   const navigate = useNavigate();
@@ -457,7 +441,7 @@ export default function AddProduct() {
           </form>
           <div className="grid gap-2 mt-5 grid-cols-[repeat(auto-fill,minmax(150px,1fr))]">
             {addProductVal.images.map((img, index) => (
-              <div className="relative">
+              <div className="relative" key={index}>
                 <div
                   className="absolute right-0 top-0 bg-sub p-1"
                   onClick={() => removeImages(index)}
