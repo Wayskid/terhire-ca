@@ -15,24 +15,6 @@ import blogRoute from "./routes/blogRoute.js";
 dotenv.config();
 connectDB();
 const app = express();
-app.use(
-  bodyParser.json({
-    verify: function (req, res, buf) {
-      req.rawBody = buf;
-    },
-    limit: "50mb",
-    extended: true,
-  })
-);
-
-// const origin = [
-//   "http://localhost:5173",
-//   "https://terhire.com",
-//   "https://terhire-ca.netlify.app",
-//   "https://terhire-ca.onrender.com/api/stripe/create-checkout-session",
-// ];
-
-// const methods = ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"];
 
 app.use(
   cors({
@@ -79,15 +61,23 @@ io.on("connect", (socket) => {
   });
 });
 
+app.use("/api/stripe", stripeRouter);
+
+app.use(
+  bodyParser.json({
+    verify: function (req, res, buf) {
+      req.rawBody = buf;
+    },
+    limit: "50mb",
+    extended: true,
+  })
+);
 //Api Routes
 app.use("/api/user", userRoute);
 app.use("/api/product", productRoute);
 app.use("/api/review", reviewsRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/blog", blogRoute);
-app.use("/api/stripe", stripeRouter);
-
-app.use(express.json());
 
 const PORT = process.env.PORT;
 server.listen(PORT || 5000, console.log(`Server is running on ${PORT}`));

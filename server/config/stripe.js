@@ -77,11 +77,7 @@ stripeRouter.post(
     let event;
 
     try {
-      event = stripe.webhooks.constructEvent(
-        req.rawBody,
-        sig,
-        endpointSecret
-      );
+      event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
     } catch (err) {
       console.log(`❌ Error message: ${err.message}`);
       res.status(400).send(`Webhook Error: ${err.message}`);
