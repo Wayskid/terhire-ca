@@ -135,7 +135,9 @@ app.post(
                                   >
                                     <tr>
                                       <td style="font-size: 0px; line-height: 0px;">
-                                        <img src=${item.price.product.images[0]} width="100" border="0" style="display: block; width: 100%;" >
+                                        <img src=${
+                                          item.price.product.images[0]
+                                        } width="100" border="0" style="display: block; width: 100%;" >
                                       </td>
                                     </tr>
                                   </table>
@@ -293,7 +295,7 @@ app.post(
                                 class="sib_class_24_black_b"
                                 style="color: #000; font-family: Montserrat,arial,helvetica,sans-serif; font-size: 24px; font-weight: 700; word-break: break-word;"
                               >
-                              $${item.amount_subtotal}
+                              $${item.amount_subtotal / 100}
                               </div>
                             </div>
                           </td>
