@@ -11,12 +11,17 @@ import orderRoute from "./routes/orderRoute.js";
 import { Server } from "socket.io";
 import http from "http";
 import blogRoute from "./routes/blogRoute.js";
+import Stripe from "stripe";
+import Order from "./models/orderModel.js";
+import nodeMailer from "nodemailer";
+import { emailHtml } from "./utils/email.js";
 
 dotenv.config();
 connectDB();
 const app = express();
 
 //Webhook
+const stripe = Stripe(process.env.STRIPE_KEY);
 const endpointSecret = process.env.STRIPE_SECRET;
 
 app.post(
