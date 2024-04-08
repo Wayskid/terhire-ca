@@ -90,7 +90,7 @@ stripeRouter.post("/create-checkout-session", async (req, res) => {
     phone_number_collection: {
       enabled: true,
     },
-    tax_id_collection: {
+    automatic_tax: {
       enabled: true,
     },
     success_url: `${process.env.SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
