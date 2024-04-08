@@ -25,6 +25,8 @@ export default function CartAside({ isCartAsideShown, setIsCartAsideShow }) {
       .then((result) => (window.location.href = result.url));
   }
 
+  console.log(cart);
+
   return (
     <div className="fixed w-full h-full bg-[#3b3b3aa3] top-0 z-50 flex">
       <div
