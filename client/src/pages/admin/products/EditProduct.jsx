@@ -185,8 +185,6 @@ export default function EditProduct() {
   }
 
   //Handle add image
-  // const [previewVal, setPreviewVal] = useState([]);
-  // setPreviewVal([...previewVal, arrayVals.imagesVal]);
   async function handleAddImages(e) {
     e.preventDefault();
     if (arrayVals.imagesVal) {
@@ -208,18 +206,6 @@ export default function EditProduct() {
       images: array,
     });
   }
-
-  //Handle image preview
-  // const [imgPreview, setImgPreview] = useState([]);
-  // useEffect(() => {
-  //   for (let i = 0; i < previewVal.length; i++) {
-  //     const image = previewVal[i];
-  //     if (image) {
-  //       const objectUrl = URL.createObjectURL(image);
-  //       setImgPreview([...imgPreview, objectUrl]);
-  //     }
-  //   }
-  // }, [updatedProduct.images]);
 
   //Handle update product
   const navigate = useNavigate();

@@ -23,31 +23,11 @@ const app = express();
 //Webhook
 const stripe = Stripe(process.env.STRIPE_KEY);
 const endpointSecret = process.env.STRIPE_SECRET;
-app.use((req, res, next) => {
-  if (req.originalUrl === "/webhook") {
-    next();
-  } else {
-    express.json()(req, res, next);
-  }
-});
-
 app.post(
   "/webhook",
   express.json({ type: "application/json" }),
   async (req, res) => {
-    // const payload = req.body;
-    // const sig = req.headers["stripe-signature"];
-
     const event = req.body;
-
-    // try {
-    //   event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
-    //   console.log("Finally worked");
-    // } catch (err) {
-    //   console.log(`❌ Error message: ${err.message}`);
-    //   res.status(400).send(`Webhook Error: ${err.message}`);
-    //   return;
-    // }
 
     // Handle the event
     switch (event.type) {
@@ -155,7 +135,7 @@ app.post(
                                   >
                                     <tr>
                                       <td style="font-size: 0px; line-height: 0px;">
-                                        <img src="https://img.mailinblue.com/2670624/images/rnb/original/5fd092a3becf5f229e6014c2.png" width="100" border="0" style="display: block; width: 100%;" >
+                                        <img src=${item.price.product.images[0]} width="100" border="0" style="display: block; width: 100%;" >
                                       </td>
                                     </tr>
                                   </table>
@@ -221,7 +201,7 @@ app.post(
                                             class="default-heading3"
                                             style="margin: 0; color: #000; font-family: Montserrat,arial,helvetica,sans-serif; font-size: 20px; word-break: break-word;"
                                           >
-                                            <u>Product name</u>
+                                            <u>${item.price.product.name}</u>
                                           </h3>
                                         </div>
                                       </td>
@@ -240,7 +220,7 @@ app.post(
                                       class="sib_class_16_black"
                                       style="color: #000; font-family: Montserrat,arial,helvetica,sans-serif; font-size: 16px; word-break: break-word;"
                                     >
-                                      Category here
+                                    ${item.price.product.metadata.category}
                                     </div>
                                   </div>
                                 </td>
@@ -278,7 +258,7 @@ app.post(
                                 class="sib_class_18_black_sb"
                                 style="color: #000; font-family: Montserrat,arial,helvetica,sans-serif; font-size: 18px; font-weight: 600; word-break: break-word;"
                               >
-                                x2
+                                x${item.quantity}
                               </div>
                             </div>
                           </td>
@@ -313,7 +293,7 @@ app.post(
                                 class="sib_class_24_black_b"
                                 style="color: #000; font-family: Montserrat,arial,helvetica,sans-serif; font-size: 24px; font-weight: 700; word-break: break-word;"
                               >
-                                1300€
+                              $${item.amount_subtotal}
                               </div>
                             </div>
                           </td>
@@ -359,6 +339,7 @@ app.post(
   }
 );
 
+//Body parser and CORS
 app.use(
   bodyParser.json({
     verify: function (req, res, buf) {
@@ -382,6 +363,7 @@ app.use(
   })
 );
 
+//Socket
 const server = http.createServer(app);
 export const io = new Server(server, {
   cors: {
@@ -394,7 +376,6 @@ export const io = new Server(server, {
     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
   },
 });
-
 io.on("connect", (socket) => {
   //Products
   socket.on("add_product", (result) => {
@@ -415,10 +396,6 @@ io.on("connect", (socket) => {
   });
 
   //Orders
-  // socket.on("add_product", (result) => {
-  //   socket.broadcast.emit("update_product", result);
-  // });
-
   socket.on("edit_order", (result) => {
     socket.broadcast.emit("update_edited_order", result);
   });

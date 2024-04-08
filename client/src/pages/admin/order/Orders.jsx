@@ -88,7 +88,7 @@ export default function Orders() {
                   {order.payment_status.toUpperCase()}
                 </p>
                 <p className="">
-                  {moment(order.createdAt).format("MMM Do YYYY")}
+                  {moment.unix(order.order_date).format("MMM Do YYYY")}
                 </p>
                 <p
                   className={`${

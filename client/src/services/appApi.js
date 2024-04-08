@@ -265,6 +265,7 @@ export const appApi = createApi({
 
           socket.onAny((eventName, result) => {
             if (eventName === "update_edited_order") {
+              console.log(eventName);
               updateCachedData((draft) => {
                 const updated = draft.forEach((order, i) => {
                   if (order._id === result._id) {

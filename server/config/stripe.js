@@ -74,6 +74,7 @@ stripeRouter.post("/create-checkout-session", async (req, res) => {
             description: item.summary,
             metadata: {
               id: item.id,
+              category: item.category,
               discount: item.discount,
             },
           },

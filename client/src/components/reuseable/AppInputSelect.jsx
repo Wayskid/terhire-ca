@@ -5,10 +5,7 @@ export default function AppInputSelect({ val, selection, name, onChange }) {
     <div className="select">
       <select id="standard-select" name={name} onChange={onChange} value={val}>
         {selection?.map((selects) => (
-          <option
-            key={selects.option}
-            value={selects.value}
-          >
+          <option key={selects.option} value={selects.value}>
             {selects.option}
           </option>
         ))}

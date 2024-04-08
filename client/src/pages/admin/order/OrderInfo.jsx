@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { BsCheckCircle, BsCircle } from "react-icons/bs";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useOutletContext } from "react-router-dom";
 import moment from "moment";
 import {
   useEditOrderMutation,
@@ -10,12 +10,17 @@ import AppInputSelect from "../../../components/reuseable/AppInputSelect.jsx";
 import AppBtn from "../../../components/reuseable/AppBtn.jsx";
 import AppDateInput from "../../../components/reuseable/AppDateInput.jsx";
 import appContext from "../../../context/AppContext.jsx";
+import { useSocket } from "../../../context/SocketProvider.jsx";
+import AppLoader from "../../../components/reuseable/AppLoader.jsx";
 
 export default function OrderDetails() {
+  const socket = useSocket();
+  const [setShowMenu] = useOutletContext();
   const navigate = useNavigate();
   const { userInfo } = useContext(appContext);
   const { order_no } = useParams();
-  const [updateOrderApi, { data }] = useEditOrderMutation();
+  const [updateOrderApi, { isLoading, isError, error }] =
+    useEditOrderMutation();
   const { data: orderDetailsResult, error: orderDetailsError } =
     useGetOrderDetailsQuery({ order_no });
 
@@ -25,13 +30,11 @@ export default function OrderDetails() {
   });
 
   useEffect(() => {
-    if (orderDetailsResult) {
-      setUpdateOrderVal({
-        status: orderDetailsResult.delivered,
-        date: orderDetailsResult.order_date,
-      });
-    }
-  }, []);
+    setUpdateOrderVal({
+      status: orderDetailsResult?.delivered,
+      date: orderDetailsResult?.delivery_date,
+    });
+  }, [orderDetailsResult]);
 
   const selection = [
     { option: "Delivered", value: true },
@@ -47,6 +50,7 @@ export default function OrderDetails() {
     })
       .unwrap()
       .then((res) => {
+        socket.emit("edit_order", res);
         navigate("../orders");
       });
   }
@@ -55,11 +59,24 @@ export default function OrderDetails() {
     //Add more info
     //Add link to stripe
     <>
-      {orderDetailsResult && (
+      {orderDetailsResult ? (
         <div className="p-10">
-          <div className="flex mb-10 justify-between items-center">
-            <p className="header text-4xl">Edit Order</p>
-            <AppBtn label="All Orders" onClick={() => navigate("../orders")} />
+          <div className="grid grid-cols-2 md:flex mb-10 justify-between items-center">
+            <div
+              className="burger inline-block py-3 px-1 cursor-pointer md:hidden"
+              onClick={() => setShowMenu(true)}
+            >
+              <div className="w-[1.9rem] h-[1.5px] mb-[0.5rem] bg-black"></div>
+              <div className="w-[1.9rem] h-[1.5px] mb-[0.5rem] bg-black"></div>
+              <div className="w-[1.9rem] h-[1.5px] bg-black"></div>
+            </div>
+            <p className="header text-4xl col-span-2">Edit Order</p>
+            <div className="col-start-2 row-start-1 grid">
+              <AppBtn
+                label="All Orders"
+                onClick={() => navigate("../orders")}
+              />
+            </div>
           </div>
           <div>
             <div className="py-5 w-[min(40rem,100%)] mx-auto flex justify-between gap-2 text-center">
@@ -67,7 +84,9 @@ export default function OrderDetails() {
                 <BsCheckCircle className="text-[4rem] text-main mx-auto" />
                 <p className="text-2xl font-light">Ordered</p>
                 <p className="font-semibold">
-                  {moment(orderDetailsResult.created).format("MMM Do YYYY")}
+                  {moment
+                    .unix(orderDetailsResult.order_date)
+                    .format("MMM Do YYYY")}
                 </p>
               </div>
               <div
@@ -84,7 +103,11 @@ export default function OrderDetails() {
                 <p className="text-2xl font-light">
                   Deliver{orderDetailsResult.delivered ? "ed" : "y"}
                 </p>
-                <p className="font-semibold">Aug 28rd, 2023</p>
+                <p className="font-semibold">
+                  {moment
+                    .unix(orderDetailsResult.delivery_date)
+                    .format("MMM Do YYYY")}
+                </p>
               </div>
             </div>
             <div className="mt-10">
@@ -254,12 +277,13 @@ export default function OrderDetails() {
                   </label>
                   <AppDateInput
                     value={updateOrderVal.date * 1000}
-                    onChange={(date) =>
+                    onChange={(date) => {
+                      console.log(date);
                       setUpdateOrderVal({
                         ...updateOrderVal,
                         date: Math.floor(new Date(date).getTime() / 1000),
-                      })
-                    }
+                      });
+                    }}
                   />
                 </div>
                 <div className="mt-4 grid">
@@ -280,15 +304,19 @@ export default function OrderDetails() {
               </div>
             </div>
             <div className="w-[min(40rem,100%)] mx-auto grid mt-10">
-              <AppBtn label="Save Changes" onClick={handleUpdateOrder} />
+              <AppBtn
+                label={isLoading ? "Saving..." : "Save Changes"}
+                onClick={handleUpdateOrder}
+              />
             </div>
           </div>
         </div>
-      )}
-      {orderDetailsError && (
-        <p className="text-4xl text-center text-gray-400 pt-20">
+      ) : isError ? (
+        <p className="py-10 text-center text-gray-700">
           {orderDetailsError.data}
         </p>
+      ) : (
+        <AppLoader />
       )}
     </>
   );
