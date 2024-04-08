@@ -23,7 +23,13 @@ const app = express();
 //Webhook
 const stripe = Stripe(process.env.STRIPE_KEY);
 const endpointSecret = process.env.STRIPE_SECRET;
-
+app.use((req, res, next) => {
+  if (req.originalUrl === "/webhook") {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
 app.post(
   "/webhook",
   express.raw({ type: "application/json" }),
@@ -33,9 +39,9 @@ app.post(
     let event;
 
     try {
-      console.log("before")
+      console.log("before");
       event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
-      console.log("after")
+      console.log("after");
     } catch (err) {
       console.log(`❌ Error message: ${err.message}`);
       res.status(400).send(`Webhook Error: ${err.message}`);
@@ -405,7 +411,6 @@ io.on("connect", (socket) => {
     socket.broadcast.emit("update_review", result);
   });
 });
-
 
 //Api Routes
 app.use("/api/user", userRoute);
