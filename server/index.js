@@ -40,7 +40,6 @@ app.use(
       "http://localhost:5173",
       "https://terhire.com",
       "https://terhire-ca.netlify.app",
-      "https://terhire-ca.onrender.com/api/stripe/create-checkout-session",
     ],
     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
     optionSuccessStatus: 204,
@@ -51,8 +50,12 @@ app.use(
 const server = http.createServer(app);
 export const io = new Server(server, {
   cors: {
-    origin,
-    methods,
+    origin: [
+      "http://localhost:5173",
+      "https://terhire.com",
+      "https://terhire-ca.netlify.app",
+    ],
+    methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
   },
 });
 
