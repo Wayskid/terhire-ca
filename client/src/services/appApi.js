@@ -271,7 +271,7 @@ export const appApi = createApi({
         try {
           await cacheDataLoaded;
 
-          socket.on("update_edited_product", (arg) => {
+          socket.on("update_edited_order", (arg) => {
             updateCachedData((draft) => {
               Object.assign(draft, arg);
             });
