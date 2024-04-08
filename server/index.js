@@ -25,19 +25,24 @@ app.use(
   })
 );
 
-const origin = [
-  "http://localhost:5173",
-  "https://terhire.com",
-  "https://terhire-ca.netlify.app",
-  "https://terhire-ca.onrender.com/api/stripe/create-checkout-session",
-];
+// const origin = [
+//   "http://localhost:5173",
+//   "https://terhire.com",
+//   "https://terhire-ca.netlify.app",
+//   "https://terhire-ca.onrender.com/api/stripe/create-checkout-session",
+// ];
 
-const methods = ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"];
+// const methods = ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"];
 
 app.use(
   cors({
-    origin,
-    methods,
+    origin: [
+      "http://localhost:5173",
+      "https://terhire.com",
+      "https://terhire-ca.netlify.app",
+      "https://terhire-ca.onrender.com/api/stripe/create-checkout-session",
+    ],
+    methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
     optionSuccessStatus: 204,
     preflightContinue: false,
   })
