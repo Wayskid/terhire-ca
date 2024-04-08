@@ -71,19 +71,17 @@ const endpointSecret = process.env.STRIPE_SECRET;
 stripeRouter.post(
   "/webhook",
   express.raw({ type: "application/json" }),
-  async (request, response) => {
-    const sig = request.headers["stripe-signature"];
+  async (req, res) => {
+    const sig = req.headers["stripe-signature"];
+
     let event;
 
     try {
-      event = stripe.webhooks.constructEvent(
-        request.rawBody,
-        sig,
-        endpointSecret
-      );
-      console.log("Webhook verified");
+      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
     } catch (err) {
-      response.status(400).send(`Webhook Error: ${err.message}`);
+      // On error, log and return the error message
+      console.log(`❌ Error message: ${err.message}`);
+      res.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }
 
