@@ -34,13 +34,14 @@ app.post(
   "/webhook",
   express.raw({ type: "application/json" }),
   async (req, res) => {
+    const payload = req.body;
     const sig = req.headers["stripe-signature"];
 
     let event;
 
     try {
       console.log("before");
-      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+      event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
       console.log("after");
     } catch (err) {
       console.log(`❌ Error message: ${err.message}`);
