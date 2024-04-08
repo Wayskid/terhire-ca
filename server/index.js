@@ -30,8 +30,10 @@ app.use((req, res, next) => {
     express.json()(req, res, next);
   }
 });
+
 app.post("/webhook", express.raw({ type: "application/json" }), (req, res) => {
   const payload = req.body;
+  console.log(payload);
   const sig = req.headers["stripe-signature"];
 
   let event;
