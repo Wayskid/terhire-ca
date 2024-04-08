@@ -359,15 +359,15 @@ app.post(
   }
 );
 
-app.use(
-  bodyParser.json({
-    verify: function (req, res, buf) {
-      req.rawBody = buf;
-    },
-    limit: "50mb",
-    extended: true,
-  })
-);
+// app.use(
+//   bodyParser.json({
+//     verify: function (req, res, buf) {
+//       req.rawBody = buf;
+//     },
+//     limit: "50mb",
+//     extended: true,
+//   })
+// );
 app.use(
   cors({
     origin: [

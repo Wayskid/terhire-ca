@@ -263,6 +263,22 @@ export const appApi = createApi({
         url: `/order/details/${order_no}`,
         method: "get",
       }),
+      async onCacheEntryAdded(
+        arg,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+      ) {
+        const socket = io(import.meta.env.VITE_TERHIRE_SERVER);
+        try {
+          await cacheDataLoaded;
+
+          socket.on("update_edited_product", (arg) => {
+            updateCachedData((draft) => {
+              Object.assign(draft, arg);
+            });
+          });
+        } catch {}
+        await cacheEntryRemoved;
+      },
     }),
 
     //---  EDIT ORDER  ---//
