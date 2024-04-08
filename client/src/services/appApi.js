@@ -255,6 +255,29 @@ export const appApi = createApi({
           authorization: `Bearer ${token}`,
         },
       }),
+      async onCacheEntryAdded(
+        arg,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+      ) {
+        const socket = io(import.meta.env.VITE_TERHIRE_SERVER);
+        try {
+          await cacheDataLoaded;
+
+          socket.onAny((eventName, result) => {
+            if (eventName === "update_edited_order") {
+              updateCachedData((draft) => {
+                const updated = draft.forEach((order, i) => {
+                  if (order._id === result._id) {
+                    draft[i] = result;
+                  }
+                });
+                return (draft = updated);
+              });
+            }
+          });
+        } catch {}
+        await cacheEntryRemoved;
+      },
     }),
 
     //---  GET ORDER DETAILS  ---//

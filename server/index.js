@@ -357,15 +357,15 @@ app.post("/webhook", express.raw({ type: "application/json" }), (req, res) => {
   res.send().end();
 });
 
-// app.use(
-//   bodyParser.json({
-//     verify: function (req, res, buf) {
-//       req.rawBody = buf;
-//     },
-//     limit: "50mb",
-//     extended: true,
-//   })
-// );
+app.use(
+  bodyParser.json({
+    verify: function (req, res, buf) {
+      req.rawBody = buf;
+    },
+    limit: "50mb",
+    extended: true,
+  })
+);
 app.use(
   cors({
     origin: [
@@ -394,6 +394,7 @@ export const io = new Server(server, {
 });
 
 io.on("connect", (socket) => {
+  //Products
   socket.on("add_product", (result) => {
     socket.broadcast.emit("update_product", result);
   });
@@ -406,8 +407,18 @@ io.on("connect", (socket) => {
     socket.broadcast.emit("delete_update", result);
   });
 
+  //Reviews
   socket.on("add_review", (result) => {
     socket.broadcast.emit("update_review", result);
+  });
+
+  //Orders
+  // socket.on("add_product", (result) => {
+  //   socket.broadcast.emit("update_product", result);
+  // });
+
+  socket.on("edit_order", (result) => {
+    socket.broadcast.emit("update_edited_order", result);
   });
 });
 
