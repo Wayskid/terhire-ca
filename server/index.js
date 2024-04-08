@@ -325,6 +325,12 @@ app.post(
             html: emailHtml({
               name: customer_details.name,
               mappedCartItems,
+              amount_discount: total_details.amount_discount,
+              amount_shipping: total_details.amount_shipping,
+              amount_subtotal,
+              amount_tax: total_details.amount_tax,
+              amount_total,
+              order_no,
             }),
           });
 
