@@ -40,7 +40,7 @@ app.use(
       "http://localhost:5173",
       "https://terhire.com",
       "https://terhire-ca.netlify.app",
-      "https://terhire-ca.onrender.com/api/stripe/create-checkout-session"
+      "https://terhire-ca.onrender.com/api/stripe/create-checkout-session",
     ],
     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
     optionSuccessStatus: 204,
@@ -55,7 +55,7 @@ export const io = new Server(server, {
       "http://localhost:5173",
       "https://terhire.com",
       "https://terhire-ca.netlify.app",
-      "https://terhire-ca.onrender.com/api/stripe/create-checkout-session"
+      "https://terhire-ca.onrender.com/api/stripe/create-checkout-session",
     ],
     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
   },
@@ -86,6 +86,8 @@ app.use("/api/review", reviewsRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/blog", blogRoute);
 app.use("/api/stripe", stripeRouter);
+
+app.use(express.json());
 
 const PORT = process.env.PORT;
 server.listen(PORT || 5000, console.log(`Server is running on ${PORT}`));
