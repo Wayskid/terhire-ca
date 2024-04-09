@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="pb-16 grid grid-cols-2 lg:grid-cols-3 gap-[4rem_0rem] lg:gap-0 justify-items-center items-center">
           <div className="lg:justify-self-start [grid-column:1/-1] lg:[grid-column:1/1]">
             <p className="text-4xl mb-4 font-light">TERHIRE</p>
-            <div className="flex justify-between text-2xl">
+            <div className="flex justify-center gap-5 text-2xl">
               {/* <Link to="/collections"><BsWhatsapp /></Link> */}
               <Link to="https://www.tiktok.com/@terhireskin?is_from_webapp=1&sender_device=pc">
                 <BsTiktok />
