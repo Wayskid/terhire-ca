@@ -199,12 +199,12 @@ app.post(
                                         style="color: #3b3f44; font-family: Montserrat,arial,helvetica,sans-serif; font-size: 16px; line-height: 1.2; word-break: break-word; text-align: left;"
                                       >
                                         <div>
-                                          <h3
+                                          <h4
                                             class="default-heading3"
                                             style="margin: 0; color: #000; font-family: Montserrat,arial,helvetica,sans-serif; font-size: 20px; word-break: break-word;"
                                           >
-                                            <u>${item.price.product.name}</u>
-                                          </h3>
+                                            <p>${item.price.product.name}</p>
+                                          </h4>
                                         </div>
                                       </td>
                                     </tr>
@@ -333,6 +333,9 @@ app.post(
               amount_tax: total_details.amount_tax,
               amount_total,
               order_no: created,
+              order_date: created,
+              shipping_details,
+              customer_details,
             }),
           });
 
