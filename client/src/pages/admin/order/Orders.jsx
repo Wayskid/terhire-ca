@@ -18,7 +18,11 @@ export default function Orders() {
     { option: "Not Delivered", value: false },
   ];
   const [filterBy, setFilterBy] = useState("");
-  const { data: ordersResults, error: ordersError } = useGetOrdersQuery({
+  const {
+    data: ordersResults,
+    isError,
+    error: ordersError,
+  } = useGetOrdersQuery({
     user_id: userInfo._id,
     token: userInfo.token,
     filter_by: filterBy,
@@ -105,6 +109,10 @@ export default function Orders() {
                 </button>
               </div>
             ))
+          ) : isError ? (
+            <p className="py-10 text-center text-gray-700">
+              {ordersError.data}
+            </p>
           ) : (
             <AppLoader />
           )}

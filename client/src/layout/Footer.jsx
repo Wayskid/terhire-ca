@@ -4,16 +4,19 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="grid justify-items-center bg-main  text-white">
+    <footer className="grid justify-items-center bg-main text-white">
       <div className="w-[min(73rem,100%)] px-6 md:px-12 py-16">
         <div className="pb-16 grid grid-cols-2 lg:grid-cols-3 gap-[4rem_0rem] lg:gap-0 justify-items-center items-center">
           <div className="lg:justify-self-start [grid-column:1/-1] lg:[grid-column:1/1]">
             <p className="text-4xl mb-4 font-light">TERHIRE</p>
             <div className="flex justify-between text-2xl">
-              <BsWhatsapp />
-              <BsInstagram />
-              <BsTiktok />
-              <FaFacebook />
+              {/* <Link to="/collections"><BsWhatsapp /></Link> */}
+              <Link to="https://www.tiktok.com/@terhireskin?is_from_webapp=1&sender_device=pc">
+                <BsTiktok />
+              </Link>
+              <Link to="https://www.instagram.com/terhireskin?igsh=MW42d2x6enRyamt2OQ==">
+                <BsInstagram />
+              </Link>
             </div>
           </div>
           <div className="links self-start">
