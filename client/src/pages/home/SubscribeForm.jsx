@@ -3,7 +3,7 @@ import { useSubscribeUserMutation } from "../../services/appApi";
 
 export default function SubscribeForm() {
   const [subscribeEmail, setSubscribeEmail] = useState("");
-  const [subscribeUserApi] = useSubscribeUserMutation();
+  const [subscribeUserApi, { isLoading, error }] = useSubscribeUserMutation();
   const [showThanks, setShowThanks] = useState(false);
 
   function handleSubscribe(e) {
@@ -40,13 +40,16 @@ export default function SubscribeForm() {
               onChange={(e) => setSubscribeEmail(e.target.value)}
               placeholder="Email Address"
             />
+            {error?.data === "Already subscribed" && (
+              <p className="font-semibold">Already subscribed</p>
+            )}
             <button
               className={`px-6 py-2 tracking-[0.125rem] uppercase border-[1px] [transition:0.6s_ease] disabled:pointer-events-none disabled:opacity-40 bg-secondary border-transparent hover:text-black
             hover:border-black text-white hover:bg-transparent text-sm mr-auto`}
               disabled={!subscribeEmail.length}
               onClick={handleSubscribe}
             >
-              Subscribe
+              {isLoading ? "Subscribing..." : "Subscribe"}
             </button>
           </div>
         ) : (
