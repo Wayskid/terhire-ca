@@ -11,10 +11,18 @@ export default function Footer() {
             <p className="text-4xl mb-4 font-light">TERHIRE</p>
             <div className="flex justify-center gap-5 text-2xl">
               {/* <Link to="/collections"><BsWhatsapp /></Link> */}
-              <Link to="https://www.tiktok.com/@terhireskin?is_from_webapp=1&sender_device=pc">
+              <Link
+                to="https://www.tiktok.com/@terhireskin?is_from_webapp=1&sender_device=pc"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <BsTiktok />
               </Link>
-              <Link to="https://www.instagram.com/terhireskin?igsh=MW42d2x6enRyamt2OQ==">
+              <Link
+                to="https://www.instagram.com/terhireskin?igsh=MW42d2x6enRyamt2OQ=="
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <BsInstagram />
               </Link>
             </div>

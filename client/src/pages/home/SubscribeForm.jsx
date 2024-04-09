@@ -17,6 +17,7 @@ export default function SubscribeForm() {
         })
         .catch(() => setShowThanks(false));
   }
+  
   return (
     <form className="bg-sub">
       <div className="grid p-6 md:p-12 lg:flex lg:gap-20 w-[min(73rem,100%)] mx-auto">
