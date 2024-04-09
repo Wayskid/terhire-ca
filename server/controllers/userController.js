@@ -1,7 +1,7 @@
 import Subscriber from "../models/subscribeModel.js";
 import User from "../models/userModel.js";
 import nodeMailer from "nodemailer";
-import { emailHtml } from "../utils/email.js";
+import { subscriberEmailHtml } from "../utils/email.js";
 import { generateToken } from "../utils/generateToken.js";
 import bcrypt from "bcrypt";
 
@@ -111,8 +111,8 @@ export const subscribeUser = async (req, res) => {
       const info = await transporter.sendMail({
         from: `Terhire <${process.env.TERHIRE_EMAIL}>`,
         to: email,
-        subject: "Welcome to Terhire",
-        html: emailHtml({ name: "Anon" }),
+        subject: "Terhire Welcome!",
+        html: subscriberEmailHtml(),
       });
 
       console.log(`Message sent: ${info.messageId}`);
