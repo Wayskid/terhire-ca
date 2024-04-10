@@ -27,10 +27,10 @@ stripeRouter.post("/create-checkout-session", async (req, res) => {
         shipping_rate_data: {
           type: "fixed_amount",
           fixed_amount: {
-            amount: 1500,
+            amount: 1600,
             currency: "cad",
           },
-          display_name: "Standard shipping",
+          display_name: "Inside Ontario - Standard",
           delivery_estimate: {
             minimum: {
               unit: "business_day",
@@ -38,7 +38,7 @@ stripeRouter.post("/create-checkout-session", async (req, res) => {
             },
             maximum: {
               unit: "business_day",
-              value: 7,
+              value: 5,
             },
           },
         },
@@ -47,10 +47,10 @@ stripeRouter.post("/create-checkout-session", async (req, res) => {
         shipping_rate_data: {
           type: "fixed_amount",
           fixed_amount: {
-            amount: 2500,
+            amount: 1900,
             currency: "cad",
           },
-          display_name: "Next day",
+          display_name: "Inside Ontario - Express",
           delivery_estimate: {
             minimum: {
               unit: "business_day",
@@ -59,6 +59,26 @@ stripeRouter.post("/create-checkout-session", async (req, res) => {
             maximum: {
               unit: "business_day",
               value: 1,
+            },
+          },
+        },
+      },
+      {
+        shipping_rate_data: {
+          type: "fixed_amount",
+          fixed_amount: {
+            amount: 2200,
+            currency: "cad",
+          },
+          display_name: "Outside Ontario - Standard",
+          delivery_estimate: {
+            minimum: {
+              unit: "business_day",
+              value: 3,
+            },
+            maximum: {
+              unit: "business_day",
+              value: 5,
             },
           },
         },
