@@ -27,14 +27,14 @@ stripeRouter.post("/create-checkout-session", async (req, res) => {
         shipping_rate_data: {
           type: "fixed_amount",
           fixed_amount: {
-            amount: 0,
+            amount: 1500,
             currency: "cad",
           },
-          display_name: "Free shipping",
+          display_name: "Standard shipping",
           delivery_estimate: {
             minimum: {
               unit: "business_day",
-              value: 5,
+              value: 3,
             },
             maximum: {
               unit: "business_day",
@@ -47,10 +47,10 @@ stripeRouter.post("/create-checkout-session", async (req, res) => {
         shipping_rate_data: {
           type: "fixed_amount",
           fixed_amount: {
-            amount: 1500,
+            amount: 2500,
             currency: "cad",
           },
-          display_name: "Next day air",
+          display_name: "Next day",
           delivery_estimate: {
             minimum: {
               unit: "business_day",
