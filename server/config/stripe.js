@@ -117,6 +117,15 @@ stripeRouter.post("/create-checkout-session", async (req, res) => {
     automatic_tax: {
       enabled: true,
     },
+    custom_text: {
+      shipping_address: {
+        message:
+          "If you're viewing this on mobile, please click 'Details' at the top right of your screen to see the price breakdown.",
+      },
+      submit: {
+        message: "We'll email you about your order.",
+      },
+    },
     allow_promotion_codes: true,
     success_url: `${process.env.SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: process.env.CANCEL_URL,
