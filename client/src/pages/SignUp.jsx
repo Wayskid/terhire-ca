@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../services/appApi.js";
 import appContext from "../context/AppContext.jsx";
 import { SetCookie } from "../hooks/cookies.js";
+import { Helmet } from "react-helmet-async";
 
 export default function SignUp() {
   //Save inputs to state

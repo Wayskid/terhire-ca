@@ -3,6 +3,7 @@ import ProductCard from "../../../components/ProductCard.jsx";
 import { useGetProductsQuery } from "../../../services/appApi.js";
 import { useOutletContext } from "react-router-dom";
 import AppLoader from "../../../components/reuseable/AppLoader.jsx";
+import { Helmet } from "react-helmet-async";
 
 export default function Bundles() {
   const [sortVal, setHeaderText, setFilterVal] = useOutletContext();

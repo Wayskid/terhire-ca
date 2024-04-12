@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Accordion from "../components/reuseable/Accordion.jsx";
+import { Helmet } from "react-helmet-async";
 
 export default function FAQ() {
   const aboutFAQ = [
