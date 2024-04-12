@@ -31,7 +31,7 @@ export default function Footer() {
             <p className="font-medium mb-5">Shop</p>
             <div className="links grid gap-3">
               <Link to="/collections">All Products</Link>
-              <Link to="/collections/body_butter">Body Butters</Link>
+              <Link to="/collections/body_butters">Body Butters</Link>
               <Link to="/collections/body_oils">Body Oils</Link>
             </div>
           </div>

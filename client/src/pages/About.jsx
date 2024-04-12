@@ -1,6 +1,17 @@
 export default function About() {
   return (
     <div>
+      <Helmet>
+        <title>Terhire | About Us</title>
+        <meta
+          name="description"
+          content="Terhire is rooted in steadfast commitment: to provide a holistic and
+          natural experience, through effective formulations, using the finest
+          and potent ingredients."
+          data-rh="true"
+        />
+        <link rel="canonical" href="https://terhire.com/about" />
+      </Helmet>
       {/* <div className="grid relative md:h-[40rem]">
         <div className="z-30 grid w-[min(73rem,100%)] mx-auto">
           <p className="header py-24 md:text-5xl text-4xl text-center md:text-left self-center z-30 justify-self-center md:justify-self-start w-[min(25rem,90%)] pl-6 md:pl-11">

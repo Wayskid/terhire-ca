@@ -25,6 +25,15 @@ export default function BodyOils() {
 
   return (
     <>
+      <Helmet>
+        <title>Terhire | SHOP Body Oils</title>
+        <meta
+          name="description"
+          content="Plant-powered formulas to nourish your complexion for a healthy-looking, radiant glow."
+          data-rh="true"
+        />
+        <link rel="canonical" href="https://terhire.com/body_oils" />
+      </Helmet>
       {bodyOilsResult ? (
         <ul className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-7 items-start">
           {bodyOilsResult.map((product) => (

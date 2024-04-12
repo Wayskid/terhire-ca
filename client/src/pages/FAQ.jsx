@@ -61,6 +61,15 @@ export default function FAQ() {
 
   return (
     <div className="mb-24">
+      <Helmet>
+        <title>Terhire | FAQ</title>
+        <meta
+          name="description"
+          content="Terhire had its inception in 2022, as Gift, the founder, initially crafted products for her family and close friends. It was officially introduced to the public in 2023."
+          data-rh="true"
+        />
+        <link rel="canonical" href="https://terhire.com/faq" />
+      </Helmet>
       <div className="mb-16 h-52 md:h-60 px-2 bg-sub grid content-center">
         <p className="header text-4xl md:text-5xl text-center ">
           Frequently Asked Questions

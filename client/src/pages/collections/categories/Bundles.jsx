@@ -26,6 +26,15 @@ export default function Bundles() {
 
   return (
     <>
+      <Helmet>
+        <title>Terhire | SHOP Bundles</title>
+        <meta
+          name="description"
+          content="All-over natural nourishment to give your entire body an indulgent self-care experience."
+          data-rh="true"
+        />
+        <link rel="canonical" href="https://terhire.com/bundles" />
+      </Helmet>
       {bundlesResult ? (
         <ul className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-7 items-start">
           {bundlesResult.map((product) => (

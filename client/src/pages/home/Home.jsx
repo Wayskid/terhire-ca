@@ -11,6 +11,7 @@ import { useState } from "react";
 import SubscribeForm from "./SubscribeForm.jsx";
 // import Blog from "./Blog.jsx";
 import HomeShop from "./HomeShop.jsx";
+import { Helmet } from "react-helmet-async";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -41,6 +42,17 @@ export default function Home() {
 
   return (
     <div className="overflow-x-hidden">
+      <Helmet>
+        <title>Terhire | Shop 100% Natural Skincare Products</title>
+        <meta
+          name="description"
+          content="We provide a holistic and 100%
+          natural skincare experience, through effective handcrafted formulations, using the finest
+          and potent ingredients."
+          data-rh="true"
+        />
+        <link rel="canonical" href="https://terhire.com" />
+      </Helmet>
       <div className="relative">
         <div className="grid md:h-[40rem] w-[min(73rem,100%)] mx-auto">
           <div className="py-24 md:pl-9 md:pr-6 text-center md:text-center self-center z-30 justify-self-center w-[min(45rem,90%)]">

@@ -41,6 +41,15 @@ export default function SignUp() {
       className="grid gap-16 w-[min(40rem,100%)] mx-auto py-16 px-6"
       onSubmit={handleRegisterUser}
     >
+      <Helmet>
+        <title>Terhire | Sign Up</title>
+        <meta
+          name="description"
+          content="TERHIRE create an account"
+          data-rh="true"
+        />
+        <link rel="canonical" href="https://terhire.com/sign_up" />
+      </Helmet>
       <p className="header font-light text-4xl md:text-5xl text-center">
         Create an account
       </p>

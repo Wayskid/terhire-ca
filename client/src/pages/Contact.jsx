@@ -1,8 +1,17 @@
-import { useEffect } from "react";
-
 export default function Contact() {
   return (
     <div className="mb-24">
+      <Helmet>
+        <title>Terhire | Contact Us</title>
+        <meta
+          name="description"
+          content="For general inquiries about our products, services, feedback, or
+          information requests, you can reach us at support@terhire.com. We
+          appreciate your interest!"
+          data-rh="true"
+        />
+        <link rel="canonical" href="https://terhire.com/contact" />
+      </Helmet>
       <div className="mb-16 h-52 md:h-60 px-2 bg-sub grid content-center">
         <p className="header text-4xl md:text-5xl text-center">Contact Us</p>
       </div>
@@ -28,8 +37,8 @@ export default function Contact() {
           <p className="font-light">
             Do you have questions about your order? Read our FAQ page for
             answers to common queries. If you still can't find what you're
-            looking for, reach out to us at info@terhire.com and we'll
-            get back to you as soon as we can.
+            looking for, reach out to us at info@terhire.com and we'll get back
+            to you as soon as we can.
             <br />
             <br />
             Please note we respond to emails during business hours only Monday

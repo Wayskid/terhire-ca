@@ -38,6 +38,15 @@ export default function Login() {
       className="grid gap-16 w-[min(40rem,100%)] mx-auto py-16 px-6 my-auto"
       onSubmit={handleLoginUser}
     >
+      <Helmet>
+        <title>Terhire | Login</title>
+        <meta
+          name="description"
+          content="TERHIRE acccount login"
+          data-rh="true"
+        />
+        <link rel="canonical" href="https://terhire.com/login" />
+      </Helmet>
       <p className="header font-light text-5xl text-center">Login</p>
       <div className="grid gap-5">
         <div className="">

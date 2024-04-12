@@ -1,8 +1,19 @@
-import { useEffect } from "react";
 
 export default function ShippingReturns() {
   return (
     <div className="mb-24">
+      <Helmet>
+        <title>Terhire | Shipping & Returns</title>
+        <meta
+          name="description"
+          content="TERHIRE currently ships to all provinces in Canada and the United
+          States. Regrettably, international shipping beyond Canada and the
+          U.S. is not available at this time. We hope to expand our shipping
+          services globally soon."
+          data-rh="true"
+        />
+        <link rel="canonical" href="https://terhire.com/shipping_returns" />
+      </Helmet>
       <div className="mb-16 h-52 md:h-60 px-2 bg-sub grid content-center">
         <p className="header text-4xl md:text-5xl text-center ">
           Shipping & returns

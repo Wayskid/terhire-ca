@@ -21,6 +21,15 @@ export default function AllProducts() {
   }, []);
   return (
     <>
+      <Helmet>
+        <title>Terhire | Shop All Products</title>
+        <meta
+          name="description"
+          content="100% natural products to elevate your everyday wellness rituals."
+          data-rh="true"
+        />
+        <link rel="canonical" href="https://terhire.com/collections" />
+      </Helmet>
       {allProductsResult ? (
         <ul className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-7">
           {allProductsResult.map((product) => (
