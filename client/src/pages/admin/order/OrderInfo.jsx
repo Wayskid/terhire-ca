@@ -39,10 +39,10 @@ export default function OrderDetails() {
     setUpdateOrderVal({
       status: orderDetailsResult?.delivered,
       date:
-        orderDetailsResult.order_no +
+        orderDetailsResult?.order_no +
         shippingDetails.find(
           (detail) =>
-            detail.amount === orderDetailsResult.total_details.amount_shipping
+            detail.amount === orderDetailsResult?.total_details?.amount_shipping
         ).date *
           24 *
           60 *
