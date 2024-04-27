@@ -24,6 +24,12 @@ export default function OrderDetails() {
   const { data: orderDetailsResult, error: orderDetailsError } =
     useGetOrderDetailsQuery({ order_no });
 
+  const shippingDetails = [
+    { method: "Inside Ontario - Standard", amount: 1600, date: 5 },
+    { method: "Inside Ontario - Express", amount: 1900, date: 1 },
+    { method: "Outside Ontario - Standard", amount: 2200, date: 5 },
+  ];
+
   const [updateOrderVal, setUpdateOrderVal] = useState({
     status: false,
     date: "",
@@ -32,7 +38,15 @@ export default function OrderDetails() {
   useEffect(() => {
     setUpdateOrderVal({
       status: orderDetailsResult?.delivered,
-      date: orderDetailsResult?.delivery_date,
+      date:
+        orderDetailsResult.order_no +
+        shippingDetails.find(
+          (detail) =>
+            detail.amount === orderDetailsResult.total_details.amount_shipping
+        ).date *
+          24 *
+          60 *
+          60,
     });
   }, [orderDetailsResult]);
 
@@ -86,7 +100,7 @@ export default function OrderDetails() {
                 <p className="font-semibold">
                   {moment
                     .unix(orderDetailsResult.order_date)
-                    .format("MMM Do YYYY")}
+                    .format("dddd MMM Do")}
                 </p>
               </div>
               <div
@@ -105,8 +119,18 @@ export default function OrderDetails() {
                 </p>
                 <p className="font-semibold">
                   {moment
-                    .unix(orderDetailsResult.delivery_date)
-                    .format("MMM Do YYYY")}
+                    .unix(
+                      orderDetailsResult.order_no +
+                        shippingDetails.find(
+                          (detail) =>
+                            detail.amount ===
+                            orderDetailsResult.total_details.amount_shipping
+                        ).date *
+                          24 *
+                          60 *
+                          60
+                    )
+                    .format("dddd MMM Do")}
                 </p>
               </div>
             </div>
@@ -131,7 +155,13 @@ export default function OrderDetails() {
                 <p className="font-semibold text-xl">Delivery Method</p>
                 <div className="flex justify-between pt-2">
                   <p className="font-semibold text-[#4d4c4c]">
-                    Overseas Express
+                    {
+                      shippingDetails.find(
+                        (detail) =>
+                          detail.amount ===
+                          orderDetailsResult.total_details.amount_shipping
+                      ).method
+                    }
                   </p>
                   <p>
                     {new Intl.NumberFormat("en", {
@@ -143,7 +173,20 @@ export default function OrderDetails() {
                   </p>
                 </div>
                 <p className="font-semibold text-[#4d4c4c] flex items-center">
-                  Expected delivery Wednesday Aug 09
+                  Expected delivery{" "}
+                  {moment
+                    .unix(
+                      orderDetailsResult.order_no +
+                        shippingDetails.find(
+                          (detail) =>
+                            detail.amount ===
+                            orderDetailsResult.total_details.amount_shipping
+                        ).date *
+                          24 *
+                          60 *
+                          60
+                    )
+                    .format("dddd MMM Do")}
                 </p>
               </div>
               <div className="py-3 border-b-[1px] border-b-[#bcbbbb]">

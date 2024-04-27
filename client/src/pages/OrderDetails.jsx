@@ -8,6 +8,11 @@ export default function OrderDetails() {
   const { order_no } = useParams();
   const { data: orderDetailsResult, error: orderDetailsError } =
     useGetOrderDetailsQuery({ order_no });
+  const shippingDetails = [
+    { method: "Inside Ontario - Standard", amount: 1600, date: 5 },
+    { method: "Inside Ontario - Express", amount: 1900, date: 1 },
+    { method: "Outside Ontario - Standard", amount: 2200, date: 5 },
+  ];
 
   return (
     <>
@@ -18,7 +23,7 @@ export default function OrderDetails() {
               <BsCheckCircle className="text-[4rem] text-main mx-auto" />
               <p className="text-2xl">Ordered</p>
               <p className="">
-                {moment(orderDetailsResult.created).format("MMM Do YYYY")}
+                {moment(orderDetailsResult.created).format("dddd MMM Do")}
               </p>
             </div>
             <div className="w-[min(25rem,100%)] h-[2px] mt-[32px] bg-[#bcbbbb] justify-self-center"></div>
@@ -31,7 +36,21 @@ export default function OrderDetails() {
               <p className="text-2xl">
                 Deliver{orderDetailsResult.delivered ? "ed" : "y"}
               </p>
-              <p className="md:text-center ">Aug 28rd, 2023</p>
+              <p className="md:text-center ">
+                {moment
+                  .unix(
+                    orderDetailsResult.order_no +
+                      shippingDetails.find(
+                        (detail) =>
+                          detail.amount ===
+                          orderDetailsResult.total_details.amount_shipping
+                      ).date *
+                        24 *
+                        60 *
+                        60
+                  )
+                  .format("dddd MMM Do")}
+              </p>
             </div>
           </div>
           <div className="mt-10">
@@ -54,7 +73,15 @@ export default function OrderDetails() {
             <div className="py-3 border-b-2 border-b-[#bcbbbb]">
               <p className="font-semibold text-xl">Delivery Method</p>
               <div className="flex justify-between pt-2">
-                <p className="font-semibold text-[#4d4c4c]">Overseas Express</p>
+                <p className="font-semibold text-[#4d4c4c]">
+                  {
+                    shippingDetails.find(
+                      (detail) =>
+                        detail.amount ===
+                        orderDetailsResult.total_details.amount_shipping
+                    ).method
+                  }
+                </p>
                 <p>
                   {new Intl.NumberFormat("en", {
                     currency: "USD",
@@ -65,7 +92,20 @@ export default function OrderDetails() {
                 </p>
               </div>
               <p className="font-semibold text-sm text-[#4d4c4c] flex items-center">
-                Expected delivery Wednesday Aug 09
+                Expected delivery{" "}
+                {moment
+                  .unix(
+                    orderDetailsResult.order_no +
+                      shippingDetails.find(
+                        (detail) =>
+                          detail.amount ===
+                          orderDetailsResult.total_details.amount_shipping
+                      ).date *
+                        24 *
+                        60 *
+                        60
+                  )
+                  .format("dddd MMM Do")}
               </p>
             </div>
             <div className="py-3 border-b-[1px] border-b-[#bcbbbb]">
@@ -125,7 +165,9 @@ export default function OrderDetails() {
                   {new Intl.NumberFormat("en", {
                     currency: "USD",
                     style: "currency",
-                  }).format(orderDetailsResult.total_details.amount_shipping)}
+                  }).format(
+                    orderDetailsResult.total_details.amount_shipping / 100
+                  )}
                 </p>
               </div>
               {orderDetailsResult.total_details.amount_discount > 0 && (

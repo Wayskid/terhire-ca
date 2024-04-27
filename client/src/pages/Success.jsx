@@ -4,14 +4,39 @@ import AppBtn from "../components/reuseable/AppBtn";
 import AppLoader from "../components/reuseable/AppLoader";
 import { BiCreditCard } from "react-icons/bi";
 import { useSessionQuery } from "../services/appApi";
+import moment from "moment";
 
 export default function Success() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
+  const shippingDetails = [
+    { method: "Inside Ontario - Standard", amount: 1600, date: 5 },
+    { method: "Inside Ontario - Express", amount: 1900, date: 1 },
+    { method: "Outside Ontario - Standard", amount: 2200, date: 5 },
+  ];
+
   const { data: orderSuccessResult } = useSessionQuery({
     id: searchParams.get("session_id"),
   });
+
+  console.log(orderSuccessResult.session.created);
+  // console.log(1714229003);
+  console.log(
+    moment
+      .unix(
+        orderSuccessResult.session.created +
+          shippingDetails.find(
+            (detail) =>
+              detail.amount ===
+              orderSuccessResult.session.total_details.amount_shipping
+          ).date *
+            24 *
+            60 *
+            60
+      )
+      .format("dddd MMM Do")
+  );
 
   return orderSuccessResult ? (
     <div className="w-[min(40rem,100%)] mx-auto py-16 px-6">
@@ -63,7 +88,15 @@ export default function Success() {
         <div className="py-3 border-b-2 border-b-[#bcbbbb]">
           <p className="font-semibold text-xl">Delivery Method</p>
           <div className="flex justify-between pt-2">
-            <p className="font-semibold text-[#4d4c4c]">Overseas Express</p>
+            <p className="font-semibold text-[#4d4c4c]">
+              {
+                shippingDetails.find(
+                  (detail) =>
+                    detail.amount ===
+                    orderSuccessResult.session.total_details.amount_shipping
+                ).method
+              }
+            </p>
             <p>
               {new Intl.NumberFormat("en", {
                 currency: "USD",
@@ -74,7 +107,20 @@ export default function Success() {
             </p>
           </div>
           <p className="font-semibold text-sm text-[#4d4c4c] flex items-center">
-            Expected delivery Wednesday Aug 09
+            Expected delivery{" "}
+            {moment
+              .unix(
+                orderSuccessResult.session.created +
+                  shippingDetails.find(
+                    (detail) =>
+                      detail.amount ===
+                      orderSuccessResult.session.total_details.amount_shipping
+                  ).date *
+                    24 *
+                    60 *
+                    60
+              )
+              .format("dddd MMM Do")}
           </p>
         </div>
         <div className="py-3 border-b-[1px] border-b-[#bcbbbb]">
@@ -129,7 +175,7 @@ export default function Success() {
                 currency: "USD",
                 style: "currency",
               }).format(
-                orderSuccessResult.session.total_details.amount_shipping
+                orderSuccessResult.session.total_details.amount_shipping / 100
               )}
             </p>
           </div>
