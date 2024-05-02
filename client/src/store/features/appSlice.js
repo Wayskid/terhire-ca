@@ -34,7 +34,7 @@ export const AppSlice = createSlice({
           } else if (action.payload.update === "Minus") {
             return {
               ...item,
-              qty: +item.qty - 1,
+              qty: item.qty < 2 ? +item.qty : +item.qty - 1,
             };
           }
         }
@@ -58,10 +58,6 @@ export const AppSlice = createSlice({
   },
 });
 
-export const {
-  setCart,
-  updateQty,
-  updateQtyBy,
-  removeFromCart,
-} = AppSlice.actions;
+export const { setCart, updateQty, updateQtyBy, removeFromCart } =
+  AppSlice.actions;
 export default AppSlice.reducer;
