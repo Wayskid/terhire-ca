@@ -142,6 +142,8 @@ export const emailHtml = ({
  <table cellspacing="0" cellpadding="0" border="0" role="presentation" width="100%" align="left" class="r13-o" style="table-layout: fixed; width: 100%;"><tr><td align="left" valign="top" class="r14-i nl2go-default-textstyle" style="color: #3b3f44; font-family: Montserrat,arial,helvetica,sans-serif; font-size: 16px; line-height: 1.2; word-break: break-word; padding-top: 15px; text-align: left;"> <div><div class="sib_class_16_white" style="color: #fff; font-family: Montserrat,arial,helvetica,sans-serif; font-size: 16px; word-break: break-word;">${
    shipping_details.name
  }<br> ${
+  customer_details.email
+}<br> ${
     shipping_details.address.line2
       ? shipping_details.address.line2 + "<br>"
       : ""

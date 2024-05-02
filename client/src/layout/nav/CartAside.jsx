@@ -139,8 +139,21 @@ export default function CartAside({ isCartAsideShown, setIsCartAsideShow }) {
             </p>
           </div>
           <AppBtn
-            label={isLoading ? "CHECKING OUT..." : "CHECKOUT"}
-            onClick={handleCheckOut}
+            label={
+              cart.length < 1
+                ? "Shop Now"
+                : isLoading
+                ? "CHECKING OUT..."
+                : "CHECKOUT"
+            }
+            onClick={
+              cart.length < 1
+                ? () => {
+                    setIsCartAsideShow(false);
+                    navigate("/collections");
+                  }
+                : handleCheckOut
+            }
           />
           <div className="mt-2 grid">
             <AppBtn

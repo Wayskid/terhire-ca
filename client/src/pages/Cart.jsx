@@ -19,7 +19,7 @@ export default function Cart() {
   }
 
   return (
-    <div className="py-16 px-6 w-[min(73rem,100%)] mx-auto">
+    <div className="py-16 px-6 w-[min(73rem,100%)] mx-auto grid content-start">
       <p className="text-4xl md:text-5xl header">Shopping cart</p>
       <ul className="py-5">
         {cart.length > 0 && (
@@ -42,28 +42,26 @@ export default function Cart() {
           </p>
         )}
       </ul>
-      <div className="grid gap-5 md:grid-cols-2 mt-10">
-        <div className="grid self-start justify-self-end">
-          <p className="mb-2">
-            Sub Total:{" "}
-            <span className="font-medium text-[18px]">
-              {new Intl.NumberFormat("en", {
-                style: "currency",
-                currency: "USD",
-              }).format(cart.reduce((a, c) => a + c.qty * c.price, 0))}{" "}
-              CAD
-            </span>
-          </p>
-          <div className="flex gap-2">
-            <AppBtn
-              label="Update"
-              version="neutral"
-              onClick={() => navigate("/collections")}
-            />
-            {cart.length > 0 && (
-              <AppBtn label="Checkout" onClick={handleCheckOut} />
-            )}
-          </div>
+      <div className="grid self-start mt-10 ml-auto">
+        <p className="mb-2">
+          Sub Total:{" "}
+          <span className="font-medium text-[18px]">
+            {new Intl.NumberFormat("en", {
+              style: "currency",
+              currency: "USD",
+            }).format(cart.reduce((a, c) => a + c.qty * c.price, 0))}{" "}
+            CAD
+          </span>
+        </p>
+        <div className="flex gap-2">
+          <AppBtn
+            label="Update"
+            version="neutral"
+            onClick={() => navigate("/collections")}
+          />
+          {cart.length > 0 && (
+            <AppBtn label="Checkout" onClick={handleCheckOut} />
+          )}
         </div>
       </div>
     </div>

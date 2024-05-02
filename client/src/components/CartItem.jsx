@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { BsDash, BsPlus, BsX } from "react-icons/bs";
+import { BsDash, BsPlus } from "react-icons/bs";
+import { AiOutlineDelete } from "react-icons/ai";
 import {
   removeFromCart,
   updateQty,
@@ -74,8 +75,8 @@ export default function CartItem({ item }) {
           currency: "USD",
         }).format(item.price * item.qty)}
       </p>
-      <BsX
-        className="text-2xl"
+      <AiOutlineDelete
+        className="text-[18px]"
         role="button"
         onClick={() => dispatch(removeFromCart(item.id))}
       />

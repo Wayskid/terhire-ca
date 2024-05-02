@@ -14,6 +14,8 @@ export default function OrderDetails() {
     { method: "Outside Ontario - Standard", amount: 2200, date: 5 },
   ];
 
+  console.log(orderDetailsResult)
+
   return (
     <>
       {orderDetailsResult && (
@@ -223,6 +225,7 @@ export default function OrderDetails() {
                 <p className="text-xl font-medium pb-2">Shipping Details</p>
                 <div className="grid gap-1">
                   <p>{orderDetailsResult.shipping_details.name}</p>
+                  <p>{orderDetailsResult.customer_details.email}</p>
                   <p>{`${orderDetailsResult.shipping_details.address.line1}, ${orderDetailsResult.shipping_details.address.city}`}</p>
                   <p>{`${orderDetailsResult.shipping_details.address.state}, ${orderDetailsResult.shipping_details.address.country}, ${orderDetailsResult.shipping_details.address.postal_code}`}</p>
                 </div>
