@@ -27,55 +27,56 @@ app.post(
   "/webhook",
   express.json({ type: "application/json" }),
   async (req, res) => {
-    const event = req.body;
+    try {
+      const event = req.body;
 
-    // Handle the event
-    switch (event.type) {
-      case "checkout.session.completed":
-        const checkoutSessionCompleted = event.data.object;
-        const {
-          id,
-          amount_subtotal,
-          amount_total,
-          created,
-          currency,
-          customer,
-          customer_details,
-          payment_method_types,
-          payment_status,
-          shipping_details,
-          total_details,
-        } = checkoutSessionCompleted;
+      // Handle the event
+      switch (event.type) {
+        case "checkout.session.completed":
+          const checkoutSessionCompleted = event.data.object;
+          const {
+            id,
+            amount_subtotal,
+            amount_total,
+            created,
+            currency,
+            customer,
+            customer_details,
+            payment_method_types,
+            payment_status,
+            shipping_details,
+            total_details,
+          } = checkoutSessionCompleted;
 
-        const session = await stripe.checkout.sessions.retrieve(
-          checkoutSessionCompleted.id,
-          {
-            expand: ["customer", "line_items.data.price.product"],
-          }
-        );
+          const session = await stripe.checkout.sessions.retrieve(
+            checkoutSessionCompleted.id,
+            {
+              expand: ["customer", "line_items.data.price.product"],
+            }
+          );
 
-        await Order.create({
-          session_id: id,
-          user_id: session.customer.metadata.user_id,
-          cart_items: session.line_items.data,
-          amount_subtotal,
-          amount_total,
-          order_no: created,
-          order_date: created,
-          delivery_date: created + 14 * 24 * 60 * 60,
-          currency,
-          customer_id: customer,
-          customer_details,
-          payment_method_types,
-          payment_status,
-          shipping_details,
-          total_details,
-        });
+          await Order.create({
+            session_id: id,
+            user_id: session.customer.metadata.user_id,
+            cart_items: session.line_items.data,
+            amount_subtotal,
+            amount_total,
+            order_no: created,
+            order_date: created,
+            delivery_date: created + 14 * 24 * 60 * 60,
+            currency,
+            customer_id: customer,
+            customer_details,
+            payment_method_types,
+            payment_status,
+            shipping_details,
+            total_details,
+          });
 
-        // map cart items
-        const mappedCartItems = session.line_items.data.map(
-          (item) =>
-            `<table
+          // map cart items
+          const mappedCartItems = session.line_items.data.map(
+            (item) =>
+              `<table
             cellspacing="0"
             cellpadding="0"
             border="0"
@@ -307,46 +308,49 @@ app.post(
               </td>
             </tr>
           </table>`
-        );
+          );
 
-        async function main() {
-          const transporter = nodeMailer.createTransport({
-            host: process.env.MAILER_HOST,
-            secureConnection: true,
-            port: 587,
-            auth: {
-              user: process.env.TERHIRE_EMAIL,
-              pass: process.env.TERHIRE_PASSWORD,
-            },
-          });
+          async function main() {
+            const transporter = nodeMailer.createTransport({
+              host: process.env.MAILER_HOST,
+              secureConnection: true,
+              port: 587,
+              auth: {
+                user: process.env.TERHIRE_EMAIL,
+                pass: process.env.TERHIRE_PASSWORD,
+              },
+            });
 
-          const info = await transporter.sendMail({
-            from: `Terhire <${process.env.TERHIRE_EMAIL}>`,
-            to: customer_details.email,
-            subject: "Order Confirmation",
-            html: emailHtml({
-              name: customer_details.name,
-              mappedCartItems,
-              amount_discount: total_details.amount_discount,
-              amount_shipping: total_details.amount_shipping,
-              amount_subtotal,
-              amount_tax: total_details.amount_tax,
-              amount_total,
-              order_no: created,
-              order_date: created,
-              shipping_details,
-              customer_details,
-            }),
-          });
+            const info = await transporter.sendMail({
+              from: `Terhire <${process.env.TERHIRE_EMAIL}>`,
+              to: customer_details.email,
+              subject: "Order Confirmation",
+              html: emailHtml({
+                name: customer_details.name,
+                mappedCartItems,
+                amount_discount: total_details.amount_discount,
+                amount_shipping: total_details.amount_shipping,
+                amount_subtotal,
+                amount_tax: total_details.amount_tax,
+                amount_total,
+                order_no: created,
+                order_date: created,
+                shipping_details,
+                customer_details,
+              }),
+            });
 
-          console.log(`Message sent: ${info.messageId}`);
-        }
-        main();
-      default:
-        console.log(`Unhandled event type ${event.type}`);
+            console.log(`Message sent: ${info.messageId}`);
+          }
+          main();
+        default:
+          console.log(`Unhandled event type ${event.type}`);
+      }
+
+      res.send().end();
+    } catch (error) {
+      res.status(400).json({ message: "Something went wrong" });
     }
-
-    res.send().end();
   }
 );
 
