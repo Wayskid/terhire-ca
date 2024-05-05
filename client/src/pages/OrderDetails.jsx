@@ -14,8 +14,6 @@ export default function OrderDetails() {
     { method: "Outside Ontario - Standard", amount: 2200, date: 5 },
   ];
 
-  console.log(orderDetailsResult)
-
   return (
     <>
       {orderDetailsResult && (

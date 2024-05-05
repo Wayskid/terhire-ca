@@ -20,24 +20,6 @@ export default function Success() {
     id: searchParams.get("session_id"),
   });
 
-  console.log(orderSuccessResult.session.created);
-  // console.log(1714229003);
-  console.log(
-    moment
-      .unix(
-        orderSuccessResult.session.created +
-          shippingDetails.find(
-            (detail) =>
-              detail.amount ===
-              orderSuccessResult.session.total_details.amount_shipping
-          ).date *
-            24 *
-            60 *
-            60
-      )
-      .format("dddd MMM Do")
-  );
-
   return orderSuccessResult ? (
     <div className="w-[min(40rem,100%)] mx-auto py-16 px-6">
       <div className="py-4 grid gap-3 text-center">

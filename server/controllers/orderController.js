@@ -47,7 +47,6 @@ export const editOrder = async (req, res) => {
     //Check if its admin trying to edit order
     const user = await User.findById(user_id);
     if (!user || !user.isAdmin) throw new Error("Forbidden");
-    console.log(date);
     //Edit order
     const order = await Order.findById(order_id);
     order.delivered = status;

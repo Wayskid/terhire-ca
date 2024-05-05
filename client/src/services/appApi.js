@@ -6,6 +6,7 @@ const BASE_URL = `${import.meta.env.VITE_TERHIRE_SERVER}/api`;
 export const appApi = createApi({
   reducerPath: "AppAPI",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  refetchOnReconnect: true,
   endpoints: (builder) => ({
     //PRODUCTS--------------------------------------
     //---  GET PRODUCTS  ---//
@@ -265,7 +266,6 @@ export const appApi = createApi({
 
           socket.onAny((eventName, result) => {
             if (eventName === "update_edited_order") {
-              console.log(eventName);
               updateCachedData((draft) => {
                 const updated = draft.forEach((order, i) => {
                   if (order._id === result._id) {

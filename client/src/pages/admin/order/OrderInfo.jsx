@@ -322,7 +322,6 @@ export default function OrderDetails() {
                   <AppDateInput
                     value={updateOrderVal.date * 1000}
                     onChange={(date) => {
-                      console.log(date);
                       setUpdateOrderVal({
                         ...updateOrderVal,
                         date: Math.floor(new Date(date).getTime() / 1000),
