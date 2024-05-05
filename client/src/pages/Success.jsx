@@ -76,7 +76,7 @@ export default function Success() {
                   (detail) =>
                     detail.amount ===
                     orderSuccessResult.session.total_details.amount_shipping
-                ).method
+                )?.method
               }
             </p>
             <p>
@@ -97,7 +97,7 @@ export default function Success() {
                     (detail) =>
                       detail.amount ===
                       orderSuccessResult.session.total_details.amount_shipping
-                  ).date *
+                  )?.date *
                     24 *
                     60 *
                     60

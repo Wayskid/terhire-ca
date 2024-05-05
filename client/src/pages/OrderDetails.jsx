@@ -44,7 +44,7 @@ export default function OrderDetails() {
                         (detail) =>
                           detail.amount ===
                           orderDetailsResult.total_details.amount_shipping
-                      ).date *
+                      )?.date *
                         24 *
                         60 *
                         60
@@ -79,7 +79,7 @@ export default function OrderDetails() {
                       (detail) =>
                         detail.amount ===
                         orderDetailsResult.total_details.amount_shipping
-                    ).method
+                    )?.method
                   }
                 </p>
                 <p>
@@ -100,7 +100,7 @@ export default function OrderDetails() {
                         (detail) =>
                           detail.amount ===
                           orderDetailsResult.total_details.amount_shipping
-                      ).date *
+                      )?.date *
                         24 *
                         60 *
                         60
