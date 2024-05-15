@@ -74,7 +74,7 @@ export default function OrderDetails() {
     //Add link to stripe
     <>
       {orderDetailsResult ? (
-        <div className="p-10">
+        <div className="p-4 md:p-6">
           <div className="grid grid-cols-2 md:flex mb-10 justify-between items-center">
             <div
               className="burger inline-block py-3 px-1 cursor-pointer md:hidden"
@@ -248,7 +248,7 @@ export default function OrderDetails() {
                     {new Intl.NumberFormat("en", {
                       currency: "USD",
                       style: "currency",
-                    }).format(orderDetailsResult.total_details.amount_shipping)}
+                    }).format(orderDetailsResult.total_details.amount_shipping/100)}
                   </p>
                 </div>
                 {orderDetailsResult.total_details.amount_discount > 0 && (
